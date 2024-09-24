@@ -33,8 +33,8 @@ def download_stock_data(symbols: list):
     Args:
         symbols (list): List of stock symbols to download data for.
     """
-    if not os.path.exists('data/stocks'):
-        os.makedirs('data/stocks')
+    if not os.path.exists('data/raw'):
+        os.makedirs('data/raw')
     
     for symbol in symbols:
         try:
@@ -46,7 +46,7 @@ def download_stock_data(symbols: list):
                 continue
             
             # Save each stock's data into a separate CSV file
-            output_file = os.path.join('data/stocks', f'{symbol}.csv')
+            output_file = os.path.join('data/raw', f'{symbol}.csv')
             stock_data.to_csv(output_file)
             print(f"Data for {symbol} saved to {output_file}.")
         except Exception as e:
@@ -82,7 +82,7 @@ def main():
 
     # Compress all CSV files into a zip file
     zip_filename = os.path.join('data', 'hong_kong_banking_stocks.zip')
-    compress_files(zip_filename, 'data/stocks')
+    compress_files(zip_filename, 'data/raw')
 
 if __name__ == "__main__":
     main()
