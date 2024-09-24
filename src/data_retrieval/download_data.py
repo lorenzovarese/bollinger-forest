@@ -26,23 +26,20 @@ def load_stock_symbols(file_path: str) -> list:
     # Return the list of tickers
     return df['ticker'].tolist()
 
-def download_stock_data(symbols: list, start_date: str, end_date: str):
+def download_stock_data(symbols: list):
     """
-    Download stock data from Yahoo Finance for each symbol and save it to individual files.
+    Download the maximum available stock data from Yahoo Finance for each symbol and save it to individual files.
 
     Args:
         symbols (list): List of stock symbols to download data for.
-        start_date (str): The start date for the data (format: 'YYYY-MM-DD').
-        end_date (str): The end date for the data (format: 'YYYY-MM-DD').
-
     """
     if not os.path.exists('data/stocks'):
         os.makedirs('data/stocks')
     
     for symbol in symbols:
         try:
-            print(f"Downloading data for {symbol}...")
-            stock_data = yf.download(symbol, start=start_date, end=end_date)
+            print(f"Downloading maximum available data for {symbol}...")
+            stock_data = yf.download(symbol, period='max')
             
             if stock_data.empty:
                 print(f"No data found for {symbol}.")
@@ -80,12 +77,8 @@ def main():
     # Load stock symbols from the CSV file
     stock_symbols = load_stock_symbols(tickers_file)
 
-    # Define the start and end dates for the dataset
-    start_date = '2011-01-01'
-    end_date = '2021-12-31'
-
-    # Download the stock data and save to individual CSV files
-    download_stock_data(stock_symbols, start_date, end_date)
+    # Download the maximum available stock data and save to individual CSV files
+    download_stock_data(stock_symbols)
 
     # Compress all CSV files into a zip file
     zip_filename = os.path.join('data', 'hong_kong_banking_stocks.zip')
