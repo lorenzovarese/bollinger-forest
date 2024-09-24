@@ -14,7 +14,7 @@ This project implements the strategy discussed in the following publication:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/bollinger-forest.git
+   git clone https://github.com/lorenzovarese/bollinger-forest.git
    cd bollinger-forest
    ```
 
